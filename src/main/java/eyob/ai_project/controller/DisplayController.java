@@ -17,6 +17,7 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
@@ -84,11 +85,10 @@ public class DisplayController implements Utils {
         JsonArray answers = questionObj.getAsJsonArray("answers");
         String correctAnswer = questionObj.get("correctAnswer").getAsString();
 
-        // Use Text and TextFlow for the question
         Text questionText = new Text((index + 1) + ". " + question);
         questionText.setStyle(" -fx-font-size: 18px; -fx-font-weight: bold;");
         TextFlow questionFlow = new TextFlow(questionText);
-        questionFlow.setTextAlignment(TextAlignment.JUSTIFY);
+        questionFlow.setTextAlignment(TextAlignment.CENTER);
         questionFlow.setPrefWidth(600);
         questionFlow.setPadding(new Insets(10));
 
@@ -99,19 +99,18 @@ public class DisplayController implements Utils {
 
         for (JsonElement answerElement : answers) {
             String answerText = answerElement.getAsString();
-
             Text optionText = new Text(answerText);
             optionText.setStyle("-fx-font-size: 16px;");
             TextFlow optionFlow = new TextFlow(optionText);
-            optionFlow.setTextAlignment(TextAlignment.LEFT);
+            optionFlow.setTextAlignment(TextAlignment.JUSTIFY);
             optionFlow.setMaxWidth(700);
 
             Button optionButton = new Button();
             optionButton.setGraphic(optionFlow);
             optionButton.setWrapText(true);
             optionButton.setMaxWidth(600);
-            optionButton.setStyle("-fx-background-color: #e0e0ff; -fx-padding: 10;");
-            optionButton.setAlignment(Pos.CENTER);
+            optionButton.setStyle("-fx-background-color: #e0e0ff; -fx-padding: 10 20;");
+            optionButton.setAlignment(Pos.CENTER_LEFT);
             optionButton.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 
             optionButton.setOnAction(e -> {
@@ -130,18 +129,21 @@ public class DisplayController implements Utils {
                 optionsContainer.getChildren().forEach(node -> {
                     Button btn = (Button) node;
                     TextFlow btnFlow = (TextFlow) btn.getGraphic();
+                    Text btnTextNode = (Text) btnFlow.getChildren().get(0);
                     String btnText = ((Text) btnFlow.getChildren().get(0)).getText();
                     String processed = btnText.split(" ")[0];
                     if (processed.equals(correctAnswer)) {
-                        btn.setStyle("-fx-background-color: green; -fx-text-fill: white;");
-                    }
+                        btn.setStyle("-fx-background-color: green; -fx-text-fill: white; -fx-color:white");
+                        btnTextNode.setFill(Color.WHITE);
+                    }else{
                     btn.setDisable(true);
+                    }
                 });
 
-                if (currentIndex == questionData.size() - 1) {
+                if (currentIndex == questionData.size() - 1 ) {
                     Platform.runLater(() -> {
                         try {
-                            Thread.sleep(1000);
+                            Thread.sleep(2000);
                             stage = (Stage) optionButton.getScene().getWindow();
                             changeScene("/eyob/ai_project/finalScore.fxml");
                         } catch (Exception ex) {
