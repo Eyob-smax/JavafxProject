@@ -25,9 +25,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class InputController implements Initializable, Utils {
-
+    @FXML
     public MFXTextField topicInput;
+    @FXML
     public MFXComboBox<ComboBox> difficultyComboBox;
+
+    @FXML
     public MFXButton generateBtn;
 
     @FXML
