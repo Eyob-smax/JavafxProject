@@ -30,7 +30,7 @@ public class Main extends Application {
             } catch (Exception e) {
                 System.err.println("Failed to initialize controller: " + e.getMessage());
             }
-            stage.setTitle("AI Question Generator");
+            stage.setTitle("DevElevate App");
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
