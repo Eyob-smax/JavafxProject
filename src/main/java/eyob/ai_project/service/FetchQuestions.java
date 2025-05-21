@@ -58,7 +58,7 @@ public class FetchQuestions {
             e.printStackTrace();
         }
     }
-    private JsonArray constructFormattedQuestions(JsonArray questions, JsonArray answers, JsonArray correctAnswers) {
+    private void constructFormattedQuestions(JsonArray questions, JsonArray answers, JsonArray correctAnswers) {
         for (int i = 0; i < questions.size(); i++) {
             JsonObject questionData = new JsonObject();
             questionData.addProperty("question", questions.get(i).getAsString());
@@ -67,7 +67,6 @@ public class FetchQuestions {
             formattedQuestions.add(questionData);
         }
         isFormatted = true;
-        return formattedQuestions;
     }
 
     public JsonArray returnQuestions() {

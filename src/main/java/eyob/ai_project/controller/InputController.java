@@ -50,8 +50,8 @@ public class InputController implements Initializable, Utils {
                 new ComboBox("2", "Medium"),
                 new ComboBox("3", "Difficult")
         ));
-        difficultyComboBox.setValue(new ComboBox("2", "Medium"));
         difficultyComboBox.setPromptText("Medium");
+        difficultyComboBox.setValue(new ComboBox("2", "Medium"));
     }
 
     public void setStage(Stage stage) {
