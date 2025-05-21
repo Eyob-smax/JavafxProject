@@ -51,6 +51,7 @@ public class InputController implements Initializable, Utils {
                 new ComboBox("3", "Difficult")
         ));
         difficultyComboBox.setValue(new ComboBox("2", "Medium"));
+        difficultyComboBox.setPromptText("Medium");
     }
 
     public void setStage(Stage stage) {
@@ -73,7 +74,7 @@ public class InputController implements Initializable, Utils {
             Task<Void> task = new Task<>() {
                 @Override
                 protected Void call() throws Exception {
-                    Thread.sleep(1500); // Simulate fetch time
+                    Thread.sleep(2500);
                     return null;
                 }
 
