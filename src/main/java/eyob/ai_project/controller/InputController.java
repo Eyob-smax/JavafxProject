@@ -38,8 +38,9 @@ public class InputController implements Initializable, Utils {
 
     @FXML
     private StackPane mainPane;
-
+    @FXML
     private Stage stage;
+    @FXML
     private String difficulty = "";
 
     @Override
