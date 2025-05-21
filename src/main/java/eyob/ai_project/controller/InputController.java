@@ -74,7 +74,7 @@ public class InputController implements Initializable, Utils {
             Task<Void> task = new Task<>() {
                 @Override
                 protected Void call() throws Exception {
-                    Thread.sleep(2500);
+                    Thread.sleep(500);
                     return null;
                 }
 

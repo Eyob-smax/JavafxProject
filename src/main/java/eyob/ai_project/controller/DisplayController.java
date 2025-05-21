@@ -8,24 +8,34 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DisplayController implements Utils {
-
+    @FXML
     public MFXButton back_to_home;
+
     @FXML
     private VBox optionsContainer;
 
     @FXML
     private Label questionLabel;
+
+    @FXML
     private Stage stage;
 
     @FXML
@@ -38,6 +48,7 @@ public class DisplayController implements Utils {
     private int currentIndex = 0;
 
     private final RequestBody requestBody = RequestBody.getInstance();
+
     private int finalScore = 0;
 
     @FXML
@@ -62,6 +73,8 @@ public class DisplayController implements Utils {
                 displayQuestion(currentIndex);
             }
         });
+
+        optionsContainer.setAlignment(Pos.CENTER);
     }
 
     private void displayQuestion(int index) {
@@ -70,15 +83,36 @@ public class DisplayController implements Utils {
         String question = questionObj.get("question").getAsString();
         JsonArray answers = questionObj.getAsJsonArray("answers");
         String correctAnswer = questionObj.get("correctAnswer").getAsString();
-        questionLabel.setText((index + 1) + ". " + question);
+
+        // Use Text and TextFlow for the question
+        Text questionText = new Text((index + 1) + ". " + question);
+        questionText.setStyle(" -fx-font-size: 18px; -fx-font-weight: bold;");
+        TextFlow questionFlow = new TextFlow(questionText);
+        questionFlow.setTextAlignment(TextAlignment.JUSTIFY);
+        questionFlow.setPrefWidth(600);
+        questionFlow.setPadding(new Insets(10));
+
+        questionLabel.setGraphic(questionFlow);
+        questionLabel.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 
         AtomicBoolean answered = new AtomicBoolean(false);
 
         for (JsonElement answerElement : answers) {
             String answerText = answerElement.getAsString();
-            Button optionButton = new Button(answerText);
-            optionButton.setMaxWidth(Double.MAX_VALUE);
-            optionButton.setStyle("-fx-background-color: #e0e0ff; -fx-padding: 10; -fx-font-size: 16px;");
+
+            Text optionText = new Text(answerText);
+            optionText.setStyle("-fx-font-size: 16px;");
+            TextFlow optionFlow = new TextFlow(optionText);
+            optionFlow.setTextAlignment(TextAlignment.LEFT);
+            optionFlow.setMaxWidth(700);
+
+            Button optionButton = new Button();
+            optionButton.setGraphic(optionFlow);
+            optionButton.setWrapText(true);
+            optionButton.setMaxWidth(600);
+            optionButton.setStyle("-fx-background-color: #e0e0ff; -fx-padding: 10;");
+            optionButton.setAlignment(Pos.CENTER);
+            optionButton.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 
             optionButton.setOnAction(e -> {
                 if (answered.get()) return;
@@ -88,16 +122,18 @@ public class DisplayController implements Utils {
                 if (isCorrect) {
                     finalScore++;
                     requestBody.setFinalScore(finalScore);
-                    optionButton.setStyle("-fx-background-color: green; -fx-text-fill: white; -fx-padding: 10; -fx-font-size: 16px;");
+                    optionButton.setStyle("-fx-background-color: green; -fx-text-fill: white;");
                 } else {
-                    optionButton.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-padding: 10; -fx-font-size: 16px;");
+                    optionButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
                 }
 
                 optionsContainer.getChildren().forEach(node -> {
                     Button btn = (Button) node;
-                    String splitedText = btn.getText().split(" ")[0];
-                    if (splitedText.equals(correctAnswer)) {
-                        btn.setStyle("-fx-background-color: green; -fx-text-fill: white; -fx-padding: 10; -fx-font-size: 16px;");
+                    TextFlow btnFlow = (TextFlow) btn.getGraphic();
+                    String btnText = ((Text) btnFlow.getChildren().get(0)).getText();
+                    String processed = btnText.split(" ")[0];
+                    if (processed.equals(correctAnswer)) {
+                        btn.setStyle("-fx-background-color: green; -fx-text-fill: white;");
                     }
                     btn.setDisable(true);
                 });
@@ -118,7 +154,6 @@ public class DisplayController implements Utils {
             optionsContainer.getChildren().add(optionButton);
         }
     }
-
 
     private boolean checkAnswer(String selectedAnswer, String correctAnswer) {
         String processedAnswer = selectedAnswer.split(" ")[0];
