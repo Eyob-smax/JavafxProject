@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="mainPane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="eyob.ai_project.controller.InputController">
+   <children>
+      <Pane prefHeight="392.0" prefWidth="476.0" style="-fx-background-color: white;">
+         <children>
+            <HBox alignment="CENTER" prefHeight="71.0" prefWidth="476.0" style="-fx-background-color: f9f9f9;">
+               <children>
+                  <Label alignment="CENTER" prefHeight="26.0" prefWidth="315.0" style="-fx-text-fill: #1875CC;" text="Dev Elevate">
+                     <font>
+                        <Font name="Arial Bold" size="25.0"/>
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <VBox alignment="CENTER_LEFT" layoutX="135.0" layoutY="102.0" prefHeight="153.0" prefWidth="371.0" spacing="20.0">
+               <children>
+                  <MFXTextField fx:id="topicInput" floatMode="DISABLED" floatingText="Enter topic"
+                                prefHeight="40.0" prefWidth="213.0" promptText="Enter topic"/>
+                  <MFXComboBox fx:id="difficultyComboBox" floatMode="DISABLED" floatingText="Select Difficulty"
+                               onAction="#selectDifficulty" prefHeight="40.0" prefWidth="247.0"
+                               promptText="Select Difficulty" text="Select Difficulty"/>
+               </children>
+            </VBox>
+            <MFXButton fx:id="generateBtn" layoutX="149.0" layoutY="327.0" onAction="#generateQuestions"
+                       prefHeight="34.0" prefWidth="178.0"
+                       style="-fx-background-color: #1875CC; -fx-text-fill: white;" text="Generate" textFill="WHITE">
+               <font>
+                  <Font size="15.0"/>
+               </font>
+            </MFXButton>
+         </children>
+      </Pane>
+
+      <VBox fx:id="loadingOverlay" alignment="CENTER" visible="false"
+            style="-fx-background-color: rgba(255,255,255,0.8);">
+         <children>
+            <ProgressIndicator />
+            <Label text="Loading..." style="-fx-text-fill: #1875CC; -fx-font-size: 16px;" />
+         </children>
+      </VBox>
+   </children>
+</StackPane>

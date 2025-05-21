@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="eyob.ai_project.controller.FinalScoreController"
+      alignment="CENTER" spacing="20.0"
+      style="-fx-background-color: white;" prefWidth="500" prefHeight="400">
+
+    <padding>
+        <Insets top="50" bottom="50" left="50" right="50"/>
+    </padding>
+
+    <Label fx:id="finalScoreLabel"
+           style="-fx-font-size: 24px; -fx-text-fill: #1875CC;"
+           text="Your Final Score:" />
+
+    <MFXButton fx:id="restartBtn" onAction="#handleRestart"
+               text="Restart" prefWidth="200"
+               style="-fx-background-color: #1875CC; -fx-text-fill: white;"/>
+
+    <MFXButton fx:id="backBtn" onAction="#handleBack"
+               text="Back to Questions" prefWidth="200"
+               style="-fx-background-color: #E0E0E0; -fx-text-fill: #333333;"/>
+</VBox>
