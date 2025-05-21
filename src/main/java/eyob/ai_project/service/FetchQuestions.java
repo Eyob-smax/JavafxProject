@@ -58,6 +58,7 @@ public class FetchQuestions {
             e.printStackTrace();
         }
     }
+
     private void constructFormattedQuestions(JsonArray questions, JsonArray answers, JsonArray correctAnswers) {
         for (int i = 0; i < questions.size(); i++) {
             JsonObject questionData = new JsonObject();
